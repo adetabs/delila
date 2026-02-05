@@ -2,4 +2,5 @@
 cache/
 *.txt
 *.conllu
+*.csv
 !requirements.txt
