@@ -1,4 +1,5 @@
 # pylint: disable=missing-module-docstring, missing-class-docstring
+import os
 import sys
 from trankit import Pipeline
 from trankit.utils import CoNLL
@@ -19,9 +20,6 @@ if __name__ == "__main__":
         print(f"Usage: python {sys.argv[0]} input [output]", file=sys.stderr)
         sys.exit(1)
 
-    with open(sys.argv[1], "r", encoding="UTF-8") as file:
-        data = file.read()
-
     if len(sys.argv) >= 3:
         out_file = sys.argv[2]
     else:
@@ -29,4 +27,14 @@ if __name__ == "__main__":
 
     nlp = Pipeline("finnish")
 
-    parse_and_save(data, nlp, out_file)
+    if os.path.isfile(sys.argv[1]):
+        with open(sys.argv[1], "r", encoding="UTF-8") as file:
+            data = file.read()
+        parse_and_save(data, nlp, out_file)
+    else:
+        directory = sys.argv[1]
+        for file in os.listdir(directory):
+            with open(f"{directory}/{file}", "r", encoding="UTF-8") as document:
+                data = document.read()
+            out_file = directory + "/" + file.removesuffix(".txt") + ".conllu"
+            parse_and_save(data, nlp, out_file)
