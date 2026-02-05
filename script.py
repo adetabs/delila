@@ -4,6 +4,7 @@ import sys
 from trankit import Pipeline
 from trankit.utils import CoNLL
 
+
 def parse_and_save(doc: str, parser: Pipeline, output: str) -> None:
     """For given document, use NLP to parse it, and save as a CoNLL-U formatted file.
 
@@ -14,6 +15,7 @@ def parse_and_save(doc: str, parser: Pipeline, output: str) -> None:
     """
     processed_doc = parser(doc)
     CoNLL.dict2conll(processed_doc, output)
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
