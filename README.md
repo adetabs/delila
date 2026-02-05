@@ -28,4 +28,4 @@ pip install .
 
 ``python script.py input [output]``
 
-The script reads a UTF-8 formatted plain text file as input, and writes results in CoNLL-U format to ``output``. If output is not provided, results are saved to ``{input%.txt}.conllu``.
+The script reads a UTF-8 formatted plain text file as input, and writes results in CoNLL-U format to ``output``. If output is not provided, results are saved to ``{input%.txt}.conllu``. If given input is a directory, every file in the directory is attempted to parse and results are saved inside the directory per-file as ``{input%.txt}.conllu``.
