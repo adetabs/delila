@@ -23,3 +23,9 @@ git submodule update
 cd trankit
 pip install .
 ````
+
+## Usage
+
+``python script.py input [output]``
+
+The script reads a UTF-8 formatted plain text file as input, and writes results in CoNLL-U format to ``output``. If output is not provided, results are saved to ``{input%.txt}.conllu``.
