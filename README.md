@@ -1,6 +1,6 @@
 # Trankit runner
 
-This took a lot of effort to get working.
+This took a lot of effort to get working, so I wanted to document my work in case I need to ever use this again.
 
 ## Dependencies
 
