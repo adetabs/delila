@@ -1,0 +1,3 @@
+[submodule "trankit"]
+	path = trankit
+	url = https://github.com/nlp-uoregon/trankit
