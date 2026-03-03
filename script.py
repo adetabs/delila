@@ -1,4 +1,9 @@
-# pylint: disable=missing-module-docstring, missing-class-docstring
+"""adela -- an adjective finding program
+
+This program uses the trankit toolkit for its parsing functions. Thanks!
+
+Check README.md for more info.
+"""
 from copy import deepcopy
 import csv
 from enum import Enum
