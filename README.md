@@ -1,4 +1,4 @@
-# adela &mdash; ADjektiivi-Etsin & LAskija
+# adela &mdash; Adjektiivietsin ja -laskija
 
 Adela is a program for investigating strings of adjectives inside Finnish-language texts. It uses the [trankit](https://github.com/nlp-uoregon/trankit) (Nguyen, Minh Van and Lai, Viet Dac and Veyseh, Amir Pouran Ben and Nguyen, Thien Huu) toolkit for ingest.
 
