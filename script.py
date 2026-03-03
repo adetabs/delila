@@ -3,6 +3,21 @@
 This program uses the trankit toolkit for its parsing functions. Thanks!
 
 Check README.md for more info.
+
+Copyright (C) 2026 Adela Noponen & Emma Koskinen
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from copy import deepcopy
 import csv
@@ -138,6 +153,12 @@ def write_results_to_file(filename: str, output) -> None:
             writer.writerow(row.values())
 
 if __name__ == "__main__":
+    print("Copyright (c) 2026 Adela Noponen & Emma Koskinen")
+    print("This program comes with ABSOLUTELY NO WARRANTY.")
+    print("This is free software, and you are welcome to redistribute it under certain" \
+          "conditions; See the GNU Affero General Public License for more details.")
+    print("")
+
     if len(sys.argv) < 2:
         print(f"Usage: python {sys.argv[0]} input [output]", file=sys.stderr)
         sys.exit(1)

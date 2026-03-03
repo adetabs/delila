@@ -34,3 +34,22 @@ pip install .
 ``python script.py input [output]``
 
 The script reads a UTF-8 formatted plain text file as input, and writes results in CoNLL-U format to ``output`` and CSV format to ``{input%.txt}.csv``. If ``output`` is not provided, results are saved to ``{input%.txt}.conllu``. If given input is a directory, ``output`` is ignored and every ``.txt`` file in the directory is attempted to parse and results are saved inside the directory per-file as ``{input%.txt}.conllu`` and ``{input%.txt}.csv``.
+
+## Copyright
+
+```
+Copyright © 2026 Adela Noponen & Emma Koskinen
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+```
