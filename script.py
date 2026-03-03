@@ -182,7 +182,7 @@ if __name__ == "__main__":
             if not file.lower().endswith(".txt"):
                 continue
             with open(f"{directory}/{file}", "r", encoding="UTF-8") as document:
-                data = document.read()
+                data = document.read().replace("\n", " ")
             out_file = directory + "/" + file.removesuffix(".txt") + ".conllu"
             tokenized_doc = parse_and_save(data, nlp, out_file)
             results = find_adjectives(tokenized_doc)
