@@ -153,6 +153,8 @@ if __name__ == "__main__":
     else:
         directory = sys.argv[1]
         for file in os.listdir(directory):
+            if not file.lower().endswith(".txt"):
+                continue
             with open(f"{directory}/{file}", "r", encoding="UTF-8") as document:
                 data = document.read()
             out_file = directory + "/" + file.removesuffix(".txt") + ".conllu"
