@@ -1,4 +1,4 @@
-"""adela -- an adjective finding program
+"""delila -- an adjective finding program
 
 This program uses the trankit toolkit for its parsing functions. Thanks!
 

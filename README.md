@@ -1,6 +1,6 @@
-# adela &mdash; Adjektiivietsin ja -laskija
+# Delila &mdash; Adjektiivien listaaja ja laskija
 
-Adela is a program for investigating strings of adjectives inside Finnish-language texts. It uses the [trankit](https://github.com/nlp-uoregon/trankit) (Nguyen, Minh Van and Lai, Viet Dac and Veyseh, Amir Pouran Ben and Nguyen, Thien Huu) toolkit for ingest.
+Delila is a program for investigating strings of adjectives inside Finnish-language texts. It uses the [trankit](https://github.com/nlp-uoregon/trankit) (Nguyen, Minh Van and Lai, Viet Dac and Veyseh, Amir Pouran Ben and Nguyen, Thien Huu) toolkit for ingest.
 
 ## Dependencies
 
@@ -12,7 +12,7 @@ Adela is a program for investigating strings of adjectives inside Finnish-langua
 
 The installation process is a bit fragile but should be future-proof because it specifies exact versions for all its parts. Make sure your system fulfills the [dependencies](#dependencies)!
 
-Follow the below steps to install adela:
+Follow the below steps to install delila:
 
 1. ``python3.10 -m venv .venv``
 2. ``source .venv/bin/activate``
@@ -31,7 +31,7 @@ pip install .
 
 ## Usage
 
-``python script.py input [output]``
+``python delila.py input [output]``
 
 The script reads a UTF-8 formatted plain text file as input, and writes results in CoNLL-U format to ``output`` and CSV format to ``{input%.txt}.csv``. If ``output`` is not provided, results are saved to ``{input%.txt}.conllu``. If given input is a directory, ``output`` is ignored and every ``.txt`` file in the directory is attempted to parse and results are saved inside the directory per-file as ``{input%.txt}.conllu`` and ``{input%.txt}.csv``.
 
