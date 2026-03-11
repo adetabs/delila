@@ -35,6 +35,10 @@ pip install .
 
 The script reads a UTF-8 formatted plain text file as input, and writes results in CoNLL-U format to ``output`` and CSV format to ``{input%.txt}.csv``. If ``output`` is not provided, results are saved to ``{input%.txt}.conllu``. If given input is a directory, ``output`` is ignored and every ``.txt`` file in the directory is attempted to parse and results are saved inside the directory per-file as ``{input%.txt}.conllu`` and ``{input%.txt}.csv``.
 
+## Possible future work
+
+The script doesn't currently support reading previously parsed CoNLL-U files and filtering them, so the original documents are passed through the NLP on every run, which takes needless time in situations where the original document has not changed.
+
 ## Copyright
 
 ```
