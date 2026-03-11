@@ -74,8 +74,8 @@ def find_adjectives(content) -> list[dict[str, str | list[str]]]:
 
         # Remove filler
         sentence = [word for word in sentence["tokens"]
-                        if "upos" in word \
-                            and word["upos"] not in (POS.CCONJ, POS.PUNCT, POS.SYM, POS.SPACE)]
+                    if "upos" in word
+                    and word["upos"] not in (POS.CCONJ, POS.PUNCT, POS.SYM, POS.SPACE)]
 
         # Skip one-word sentences
         if len(sentence) == 1:
@@ -112,7 +112,7 @@ def find_adjectives(content) -> list[dict[str, str | list[str]]]:
                 # - elif because there is no following word in the previous case
                 # - abs() is there so we don't wrap around
                 elif fills_conditions(sentence[pointer+1], conjugation) or \
-                    fills_conditions(sentence[abs(pointer-1)], conjugation):
+                        fills_conditions(sentence[abs(pointer-1)], conjugation):
                     string_of_adjectives.append(sentence[pointer]["lemma"])
 
                 # Did we just handle the last word of the sentence?
@@ -128,7 +128,8 @@ def find_adjectives(content) -> list[dict[str, str | list[str]]]:
 
     return result
 
-def fills_conditions(checked_token, conj: str|None) -> bool:
+
+def fills_conditions(checked_token, conj: str | None) -> bool:
     """Checks if word fills the conditions set for the parser.
 
     Args:
@@ -145,7 +146,8 @@ def fills_conditions(checked_token, conj: str|None) -> bool:
     checked_conj = get_conjugation(checked_token)
     return conj == checked_conj or checked_conj is None
 
-def get_conjugation(token) -> str|None:
+
+def get_conjugation(token) -> str | None:
     """Get morphological feature tags of the token, then extract case information.
 
     Args:
@@ -156,8 +158,9 @@ def get_conjugation(token) -> str|None:
     """
     try:
         return dict(pair.split("=") for pair in token["feats"].split("|"))["Case"]
-    except KeyError: # No case tagged
+    except KeyError:  # No case tagged
         return None
+
 
 def parse_and_save(doc: str, parser: Pipeline, output: str):
     """For given document, use NLP to parse it, and save as a CoNLL-U formatted file.
@@ -170,6 +173,7 @@ def parse_and_save(doc: str, parser: Pipeline, output: str):
     processed_doc = parser(doc)
     CoNLL.dict2conll(processed_doc, output)
     return processed_doc
+
 
 def write_results_to_file(filename: str, output) -> None:
     """Write AdjectiveData results to a CSV file.
@@ -186,10 +190,11 @@ def write_results_to_file(filename: str, output) -> None:
             row.pop("adjective_list")
             writer.writerow(row.values())
 
+
 if __name__ == "__main__":
     print("Copyright (c) 2026 Adela Noponen & Emma Koskinen")
     print("This program comes with ABSOLUTELY NO WARRANTY.")
-    print("This is free software, and you are welcome to redistribute it under certain " \
+    print("This is free software, and you are welcome to redistribute it under certain "
           "conditions; See the GNU Affero General Public License for more details.")
     print("")
 
@@ -209,7 +214,8 @@ if __name__ == "__main__":
             data = file.read().replace("\n", " ")
         tokenized_doc = parse_and_save(data, nlp, out_file)
         results = find_adjectives(tokenized_doc)
-        write_results_to_file(sys.argv[1].removesuffix('.txt') + ".csv", results)
+        write_results_to_file(
+            sys.argv[1].removesuffix('.txt') + ".csv", results)
     else:
         directory = sys.argv[1]
         for file in os.listdir(directory):
@@ -220,4 +226,5 @@ if __name__ == "__main__":
             out_file = directory + "/" + file.removesuffix(".txt") + ".conllu"
             tokenized_doc = parse_and_save(data, nlp, out_file)
             results = find_adjectives(tokenized_doc)
-            write_results_to_file(out_file.removesuffix(".conllu") + ".csv", results)
+            write_results_to_file(out_file.removesuffix(
+                ".conllu") + ".csv", results)
