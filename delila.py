@@ -51,7 +51,7 @@ class POS(str, Enum):
     X = "X"
 
 
-def find_adjectives(content) -> list[dict[str, str | list[str]]]:
+def find_adjectives(content) -> list[dict[str, str | list[list[str | None]]]]:
     """Process tokenized content and find strings of two or more adjectives
 
     Args:
@@ -61,14 +61,14 @@ def find_adjectives(content) -> list[dict[str, str | list[str]]]:
         AdjectiveData: A list where each item represents
             one result (one adjective sequence).
             Each item is a dictionary containing keys
-            "sentence": str and "adjective_list": list[str]
+            "sentence": str and "adjective_list": list[list[str | None]]
     """
 
-    result: list[dict[str, str | list[str]]] = []
+    result: list[dict[str, str | list[list[str | None]]]] = []
 
     for sentence in content["sentences"]:
 
-        one_result: dict[str, str | list[str]] = {}
+        one_result: dict[str, str | list[list[str | None]]] = {}
 
         one_result["sentence"] = sentence["text"]
 
@@ -93,7 +93,7 @@ def find_adjectives(content) -> list[dict[str, str | list[str]]]:
                 break
 
             one_result["adjective_list"] = []
-            string_of_adjectives: list[str] = []
+            string_of_adjectives: list[list[str | None]] = []
 
             # Is the current word an adjective?
             while sentence[pointer]["upos"] == POS.ADJ:
@@ -106,14 +106,16 @@ def find_adjectives(content) -> list[dict[str, str | list[str]]]:
 
                     # Was the previous word an adjective in the same conjugation?
                     if fills_conditions(sentence[pointer-1], conjugation):
-                        string_of_adjectives.append(sentence[pointer]["lemma"])
+                        string_of_adjectives.append(
+                            [sentence[pointer]["lemma"], get_feats(sentence[pointer], "Degree")])
 
                 # Are either of the neighboring words adjectives in the same conjugation?
                 # - elif because there is no following word in the previous case
                 # - abs() is there so we don't wrap around
                 elif fills_conditions(sentence[pointer+1], conjugation) or \
                         fills_conditions(sentence[abs(pointer-1)], conjugation):
-                    string_of_adjectives.append(sentence[pointer]["lemma"])
+                    string_of_adjectives.append(
+                        [sentence[pointer]["lemma"], get_feats(sentence[pointer], "Degree")])
 
                 # Did we just handle the last word of the sentence?
                 pointer += 1
@@ -176,7 +178,7 @@ def parse_and_save(doc: str, parser: Pipeline, output: str):
     return processed_doc
 
 
-def write_results_to_file(filename: str, output) -> None:
+def write_results_to_file(filename: str, output: list[dict[str, str | list[list[str | None]]]]) -> None:
     """Write AdjectiveData results to a CSV file.
 
     Args:
@@ -187,7 +189,10 @@ def write_results_to_file(filename: str, output) -> None:
         writer = csv.writer(csvfile)
         for row in output:
             for i, adjective in enumerate(row["adjective_list"]):
-                row[f"adjective_{i+1}"] = adjective
+                # This will never be None and if it is we need to ValueError
+                row[f"adjective_{i+1}"] = adjective[0]  # type: ignore
+                # This can be None because the adjective might not have a specified Degree
+                row[f"adjective_{i+1}_degree"] = adjective[1] if adjective[1] is not None else "na"
             row.pop("adjective_list")
             writer.writerow(row.values())
 
