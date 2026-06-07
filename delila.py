@@ -99,7 +99,7 @@ def find_adjectives(content) -> list[dict[str, str | list[str]]]:
             while sentence[pointer]["upos"] == POS.ADJ:
 
                 # What is the conjugation of the current adjective?
-                conjugation = get_conjugation(sentence[pointer])
+                conjugation = get_feats(sentence[pointer], "Case")
 
                 # Are we at the last word of the sentence?
                 if pointer + 1 >= len(sentence):
@@ -143,22 +143,23 @@ def fills_conditions(checked_token, conj: str | None) -> bool:
         return False
     if conj is None:
         return True
-    checked_conj = get_conjugation(checked_token)
+    checked_conj = get_feats(checked_token, "Case")
     return conj == checked_conj or checked_conj is None
 
 
-def get_conjugation(token) -> str | None:
-    """Get morphological feature tags of the token, then extract case information.
+def get_feats(token, tag: str) -> str | None:
+    """Get morphological feature tags of the token, then extract information for a single tag.
 
     Args:
         token (Token): A single word token.
+        tag (str): Tag which information is sought from.
 
     Returns:
-        str: The case of the token.
+        str: The contents of the specified tag for the token.
     """
     try:
-        return dict(pair.split("=") for pair in token["feats"].split("|"))["Case"]
-    except KeyError:  # No case tagged
+        return dict(pair.split("=") for pair in token["feats"].split("|"))[tag]
+    except KeyError:  # Tag not present
         return None
 
 
